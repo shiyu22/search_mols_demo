@@ -27,9 +27,10 @@ def do_search(table_name, img_path, top_k, model, graph, sess):
         # res = [x.decode('utf-8') for x in query_name_from_ids(vids)]
 
         res_id = [x.decode('utf-8') for x in query_name_from_ids(vids)]
-        # print(res_id)
+        print("vids:",vids)
+        print("res_id:",res_id)
         res_distance = [x.distance for x in vectors[0]]
-        # print(res_distance)
+        print(res_distance)
         # res = dict(zip(res_id,distance))
 
         return res_id,res_distance
