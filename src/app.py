@@ -106,12 +106,12 @@ def thread_status_api():
     return "current: {}, total: {}".format(cache['current'], cache['total'])
 
 
-@app.route('/data/<image_name>')
-def image_path(image_name):
-    file_name = DATA_PATH + '/' + image_name
-    if path.exists(file_name):
-        return send_file(file_name)
-    return "file not exist"
+# @app.route('/data/<image_name>')
+# def image_path(image_name):
+#     file_name = DATA_PATH + '/' + image_name
+#     if path.exists(file_name):
+#         return send_file(file_name)
+#     return "file not exist"
 
 
 @app.route('/api/v1/search', methods=['POST'])
@@ -137,8 +137,9 @@ def do_search_api():
             res_mol.append(mol)
         print("res_mol:",len(res_mol))
         img = Draw.MolsToGridImage(res_mol, molsPerRow=2, subImgSize=(400, 400),legends=["%s - %f" % (res_smi[x], res_distance[x]) for x in range(len(res_mol))])
-        img.save(UPLOAD_PATH + "/similarities_results.png")
-        res_img = request.url_root + UPLOAD_PATH + "/similarities_results.png"        
+        img.save("data/similarities_results.png")
+        # res_img = request.url_root + UPLOAD_PATH + "/similarities_results.png"        
+        res_img = request.url_root + "data/similarities_results.png"
         print(res_img)
         return jsonify(res_img), 200
     return "not found", 400
