@@ -6,7 +6,7 @@ from preprocessor.vggnet import vgg_extract_feat
 from diskcache import Cache
 
 
-def query_name_from_ids(vids):
+def query_smi_from_ids(vids):
     res = []
     cache = Cache(default_cache_dir)
     print("cache:",cache)
@@ -16,25 +16,25 @@ def query_name_from_ids(vids):
     return res
 
 
-def do_search(table_name, img_path, top_k, model, graph, sess):
+def do_search(table_name, molecular_name, top_k, model, graph, sess):
     try:
         feats = []
         index_client = milvus_client()
-        feat = vgg_extract_feat(img_path, model, graph, sess)
+        feat = vgg_extract_feat(molecular_name, model, graph, sess)
         feats.append(feat)
         _, vectors = search_vectors(index_client, table_name, feats, top_k)
-        vids = [x.id for x in vectors[0]]
+        vids = [x.id for x in vectors[0]] #取出查询得到的向量id
         # print(vids)
         # res = [x.decode('utf-8') for x in query_name_from_ids(vids)]
 
-        res_id = [x.decode('utf-8') for x in query_name_from_ids(vids)]
+        res_smi = [x.decode('utf-8') for x in query_smi_from_ids(vids)] #取出向量id对应的 .smi 文件
         print("vids:",vids)
-        print("res_id:",res_id)
-        res_distance = [x.distance for x in vectors[0]]
+        print("res_smi:",res_smi)
+        res_distance = [x.distance for x in vectors[0]] #取出查询得到的向量distance
         print(res_distance)
         # res = dict(zip(res_id,distance))
 
-        return res_id,res_distance
+        return res_smi,res_distance
     except Exception as e:
         logging.error(e)
         return "Fail with error {}".format(e)
