@@ -55,7 +55,7 @@ def load_model():
 
 
 @app.route('/api/v1/load', methods=['POST'])
-def do_train_api():
+def do_load_api():
     args = reqparse.RequestParser(). \
         add_argument('Table', type=str). \
         add_argument('File', type=str). \
