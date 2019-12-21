@@ -12,10 +12,10 @@ from service.delete import do_delete
 from service.theardpool import thread_runner
 # from preprocessor.vggnet import vgg_extract_feat
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
-# from flask_cors import CORS
-# from flask import Flask, request, send_file, jsonify
-# from flask_restful import reqparse
-# from werkzeug.utils import secure_filename
+from flask_cors import CORS
+from flask import Flask, request, send_file, jsonify
+from flask_restful import reqparse
+from werkzeug.utils import secure_filename
 # from keras.applications.vgg16 import VGG16
 # from keras.applications.vgg16 import preprocess_input as preprocess_input_vgg
 # from keras.preprocessing import image
@@ -24,7 +24,7 @@ from numpy import linalg as LA
 # import tensorflow as tf
 # from tensorflow.python.keras.backend import set_session
 # from tensorflow.python.keras.models import load_model
-# from diskcache import Cache
+from diskcache import Cache
 import shutil
 import urllib
 import os
@@ -40,11 +40,11 @@ from rdkit.Chem import Draw
 # sess = tf.Session(config=config)
 # set_session(sess)
 
-# app = Flask(__name__)
-# ALLOWED_EXTENSIONS = set(['jpg', 'png'])
-# app.config['UPLOAD_FOLDER'] = UPLOAD_PATH
-# app.config['JSON_SORT_KEYS'] = False
-# CORS(app)
+app = Flask(__name__)
+ALLOWED_EXTENSIONS = set(['jpg', 'png'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_PATH
+app.config['JSON_SORT_KEYS'] = False
+CORS(app)
 
 model = None
 
