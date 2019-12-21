@@ -5,6 +5,7 @@ from diskcache import Cache
 from rdkit import DataStructs
 from common.const import default_cache_dir
 from rdkit import Chem
+import math
 from rdkit.Chem import AllChem
 from common.config import VECTOR_DIMENSION
 
@@ -44,7 +45,7 @@ def feature_extract(table_name, filepath, names = [], feats = []):
             cache['current'] = current
             line = line.strip()
             print(str(line))
-            # line = 'o1c(C(O)CNC(C)(C)C)cc2c1c(CC(=O)OC(C)(C)C)ccc2'
+            line = 'o1c(C(O)CNC(C)(C)C)cc2c1c(CC(=O)OC(C)(C)C)ccc2'
             # try:
             vec = smiles_to_vec(line)
             print(vet)
