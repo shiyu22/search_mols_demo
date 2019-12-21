@@ -55,7 +55,6 @@ def feature_extract(table_name, filepath):
             # line = 'o1c(C(O)CNC(C)(C)C)cc2c1c(CC(=O)OC(C)(C)C)ccc2'
             try:
                 vec = smiles_to_vec(line)
-                print(vet)
                 feats.append(f)
                 names.append(line)
             except:
