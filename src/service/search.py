@@ -1,8 +1,8 @@
 import logging
 from common.const import default_cache_dir
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
-from preprocessor.vggnet import VGGNet
-from preprocessor.vggnet import vgg_extract_feat
+# from preprocessor.vggnet import VGGNet
+# from preprocessor.vggnet import vgg_extract_feat
 from diskcache import Cache
 from encoder.encode import smiles_to_vec
 
