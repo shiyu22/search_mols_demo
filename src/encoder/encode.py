@@ -51,12 +51,12 @@ def feature_extract(table_name, filepath, names = [], feats = []):
             line = line.strip()
             print(str(line))
             # line = 'o1c(C(O)CNC(C)(C)C)cc2c1c(CC(=O)OC(C)(C)C)ccc2'
-            # try:
-            vec = smiles_to_vec(line)
-            print(vet)
-            feats.append(f)
-            names.append(line)
-            # except:
-            #     continue
+            try:
+                vec = smiles_to_vec(line)
+                print(vet)
+                feats.append(f)
+                names.append(line)
+            except:
+                continue
         print ("extracting feature from smi No. %d , %d images in total" %(current, total))
     return feats, names
