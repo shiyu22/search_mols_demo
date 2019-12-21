@@ -39,7 +39,9 @@ def smiles_to_vec(smiles):
     return vec
 
 
-def feature_extract(table_name, filepath, names = [], feats = []):
+def feature_extract(table_name, filepath):
+    names = []
+    feats = []
     cache = Cache(default_cache_dir)
     total = len(open(filepath,'rU').readlines())
     cache['total'] = total
