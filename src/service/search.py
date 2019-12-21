@@ -9,6 +9,7 @@ from diskcache import Cache
 def query_name_from_ids(vids):
     res = []
     cache = Cache(default_cache_dir)
+    print(cache)
     for i in vids:
         if i in cache:
             res.append(cache[i])
