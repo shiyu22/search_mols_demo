@@ -5,7 +5,7 @@ from common.config import DATA_PATH, DEFAULT_TABLE
 from common.const import UPLOAD_PATH
 from common.const import input_shape
 from common.const import default_cache_dir
-from service.train import do_train
+from service.load import do_load
 from service.search import do_search
 from service.count import do_count
 from service.delete import do_delete
@@ -54,8 +54,8 @@ def load_model():
                   include_top=False)
 
 
-@app.route('/api/v1/train', methods=['POST'])
-def do_train_api():
+@app.route('/api/v1/load', methods=['POST'])
+def do_load_api():
     args = reqparse.RequestParser(). \
         add_argument('Table', type=str). \
         add_argument('File', type=str). \
@@ -63,13 +63,14 @@ def do_train_api():
     table_name = args['Table']
     file_path = args['File']
     try:
-        thread_runner(1, do_train, table_name, file_path)
-        filenames = os.listdir(file_path)
-        if not os.path.exists(DATA_PATH):
-            os.mkdir(DATA_PATH)
-        for filename in filenames:
-            shutil.copy(file_path + '/' + filename, DATA_PATH)
-        return "Start"
+        thread_runner(1, do_load, table_name, file_path)
+        # thread_runner(1, do_train, table_name, file_path)
+        # filenames = os.listdir(file_path)
+        # if not os.path.exists(DATA_PATH):
+        #     os.mkdir(DATA_PATH)
+        # for filename in filenames:
+        #     shutil.copy(file_path + '/' + filename, DATA_PATH)
+        return "Finished!"
     except Exception as e:
         return "Error with {}".format(e)
 
