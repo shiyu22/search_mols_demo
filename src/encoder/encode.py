@@ -33,9 +33,9 @@ def smiles_to_vec(smiles):
     hex_fp = DataStructs.BitVectToFPSText(fp)
     print("hex_fp:",hex_fp)
     bstr = hex_to_bin(hex_fp)
-    print("bstr:",bstr)
+    # print("bstr:",bstr)
     vec = bin_to_vec(bstr)
-    print("vec:",vec)
+    # print("vec:",vec)
     return vec
 
 
@@ -60,6 +60,6 @@ def feature_extract(table_name, filepath):
                 names.append(line)
             except:
                 continue
-            print(names,feats)
+            print("---------------------------------"names,feats)
             print ("extracting feature from smi No. %d , %d images in total" %(current, total))
     return feats, names
