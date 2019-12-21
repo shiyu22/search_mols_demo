@@ -5,6 +5,7 @@ from common.config import DATA_PATH, DEFAULT_TABLE
 from common.const import UPLOAD_PATH
 # from common.const import input_shape
 from common.const import default_cache_dir
+from common.const import UPLOAD_PATH
 from service.load import do_load
 from service.search import do_search
 from service.count import do_count
@@ -136,8 +137,8 @@ def do_search_api():
             res_mol.append(mol)
         print("res_mol:",len(res_mol))
         img = Draw.MolsToGridImage(res_mol, molsPerRow=2, subImgSize=(400, 400),legends=["%s - %f" % (res_smi[x], res_distance[x]) for x in range(len(res_mol))])
-        img.save("../similarities_results.png")
-        res_img = request.url_root +"out/similarities_results.png"        
+        img.save("UPLOAD_PATH/similarities_results.png")
+        res_img = request.url_root +"UPLOAD_PATH/similarities_results.png"        
         print(res_img)
         return jsonify(res_img), 200
     return "not found", 400
