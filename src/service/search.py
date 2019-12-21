@@ -30,7 +30,7 @@ def do_search(table_name, molecular_name, top_k):
         print(vids)
         # res = [x.decode('utf-8') for x in query_name_from_ids(vids)]
 
-        res_smi = [x.decode('utf-8') for x in query_smi_from_ids(vids)] #取出向量id对应的 .smi 文件
+        res_smi = [x for x in query_smi_from_ids(vids)] #取出向量id对应的 .smi 文件
         # print("vids:",vids)
         print("res_smi:",res_smi)
         res_distance = [x.distance for x in vectors[0]] #取出查询得到的向量distance
