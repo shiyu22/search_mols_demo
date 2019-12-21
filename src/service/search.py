@@ -17,7 +17,7 @@ def query_smi_from_ids(vids):
     return res
 
 
-def do_search(table_name, molecular_name, top_k, model, graph, sess):
+def do_search(table_name, molecular_name, top_k):
     try:
         feats = []
         index_client = milvus_client()
