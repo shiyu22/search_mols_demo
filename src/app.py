@@ -40,11 +40,11 @@ from rdkit.Chem import Draw
 # sess = tf.Session(config=config)
 # set_session(sess)
 
-app = Flask(__name__)
-ALLOWED_EXTENSIONS = set(['jpg', 'png'])
-app.config['UPLOAD_FOLDER'] = UPLOAD_PATH
-app.config['JSON_SORT_KEYS'] = False
-CORS(app)
+# app = Flask(__name__)
+# ALLOWED_EXTENSIONS = set(['jpg', 'png'])
+# app.config['UPLOAD_FOLDER'] = UPLOAD_PATH
+# app.config['JSON_SORT_KEYS'] = False
+# CORS(app)
 
 model = None
 
