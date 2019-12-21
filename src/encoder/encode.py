@@ -1,27 +1,51 @@
 import os
 import numpy as np
 from common.config import DATA_PATH as database_path
-from encoder.utils import get_imlist
-from preprocessor.vggnet import VGGNet
 from diskcache import Cache
 from common.const import default_cache_dir
+from rdkit import Chem
+from rdkit.Chem import AllChem
+from common.config import VECTOR_DIMENSION
 
 
-def feature_extract(database_path, model):
+def hex_to_bin(fp):
+    length = len(fp) * 4
+    bstr = str(bin(int(fp,16)))
+    bstr = (length-(len(bstr)-2)) * '0' + bstr[2:]
+    return bstr
+
+
+def bin_to_vec(bstr):
+    vec = []
+    for f in bstr:
+        f = int(f) * 1.0
+        vec.append(f)
+    return vec
+
+
+def smiles_to_vec(smiles):
+    mols = Chem.MolFromSmiles(smiles)
+    fp = AllChemcd .GetMorganFingerprintAsBitVect(mols, 2, VECTOR_DIMENSION)
+    bstr = hex_to_bin(fp)
+    vec = bin_to_vec(bstr)
+    return vec
+
+
+def feature_extract(table_name, filepath, names = [], feats = []):
     cache = Cache(default_cache_dir)
-    feats = []
-    names = []
-    img_list = get_imlist(database_path)
-    model = model
-    for i, img_path in enumerate(img_list):
-        norm_feat = model.vgg_extract_feat(img_path)
-        img_name = os.path.split(img_path)[1]
-        feats.append(norm_feat)
-        names.append(img_name.encode())
-        current = i+1
-        total = len(img_list)
-        cache['current'] = current
-        cache['total'] = total
-        print ("extracting feature from image No. %d , %d images in total" %(current, total))
-#    feats = np.array(feats)
+    total = len(open(filepath,'rU').readlines())
+    cache['total'] = total
+    current = 0
+    with open(filepath, 'r') as f:
+        for line in f:
+            current += 1
+            cache['current'] = current
+            line = line.strip()
+            try:
+                vec = smiles_to_vec(line)
+                feats.append(f)
+                names.append(line)
+            except:
+                continue
+        print ("extracting feature from smi No. %d , %d images in total" %(current, total))
     return feats, names
