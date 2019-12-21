@@ -134,9 +134,9 @@ def do_search_api():
         for i in range(len(res_smi)):
             mol = Chem.MolFromSmiles(res_smi[i])
             res_mol.append(mol)
-
+        print("res_mol:",len(res_mol))
         img = Draw.MolsToGridImage(res_mol, molsPerRow=2, subImgSize=(400, 400),legends=["%s - %f" % (res_smi[x], res_distance[x]) for x in range(len(res_mol))])
-        img.save("../out/similarities_results.png")
+        img.save("../similarities_results.png")
         res_img = request.url_root +"out/similarities_results.png"        
         print(res_img)
         return jsonify(res_img), 200
