@@ -12,7 +12,7 @@ from service.delete import do_delete
 from service.theardpool import thread_runner
 from preprocessor.vggnet import vgg_extract_feat
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
-from service.search import query_name_from_ids
+# from service.search import query_name_from_ids
 from flask_cors import CORS
 from flask import Flask, request, send_file, jsonify
 from flask_restful import reqparse
@@ -27,6 +27,12 @@ from tensorflow.python.keras.backend import set_session
 from tensorflow.python.keras.models import load_model
 from diskcache import Cache
 import shutil
+import urllib
+import os
+from rdkit import Chem
+from rdkit.Chem import AllChem
+from rdkit import DataStructs
+from rdkit.Chem import Draw
 
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -64,13 +70,12 @@ def do_load_api():
     file_path = args['File']
     try:
         thread_runner(1, do_load, table_name, file_path)
-        # thread_runner(1, do_train, table_name, file_path)
         # filenames = os.listdir(file_path)
         # if not os.path.exists(DATA_PATH):
         #     os.mkdir(DATA_PATH)
         # for filename in filenames:
         #     shutil.copy(file_path + '/' + filename, DATA_PATH)
-        return "Finished!"
+        return "Start"
     except Exception as e:
         return "Error with {}".format(e)
 
@@ -119,33 +124,54 @@ def do_search_api():
     args = reqparse.RequestParser(). \
         add_argument("Table", type=str). \
         add_argument("Num", type=int, default=1). \
+        add_argument("Molecular", type=str). \
         parse_args()
 
     table_name = args['Table']
     if not table_name:
         table_name = DEFAULT_TABLE
     top_k = args['Num']
-    file = request.files.get('file', "")
-    if not file:
-        return "no file data", 400
-    if not file.name:
-        return "need file name", 400
-    if file:
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(file_path)
-        res_id,res_distance = do_search(table_name, file_path, top_k, model, graph, sess)
-        if isinstance(res_id, str):
-            return res_id
-        res_img = [request.url_root +"data/" + x for x in res_id]
-        res = dict(zip(res_img,res_distance))
-        res = sorted(res.items(),key=lambda item:item[1])
-        print(jsonify(res))
-        return jsonify(res), 200
+    molecular_name = args['Molecular']
+    if not molecular_name:
+        return "no molecular"
+    if molecular_name:
+        res_smi,res_distance = do_search(table_name, molecular_name, top_k, model, graph, sess)
+        res_mol = []
+        for i in range(len(res_smi)):
+            mol = process_smiles_file(res_smi[i])
+            res_mol.append(mol)
+        img = Draw.MolsToGridImage([res_mol[x] for x in range(len(res_mol))], molsPerRow=2, subImgSize=(400, 400),legends=["%s - %f" % (res_smi[x], res_distance[x]) for x in range(len(res_mol))])
+        img.save("../out/similarities_results.png")
+        res_img = request.url_root +"out/similarities_results.png"        
+        print(res_img)
+        return jsonify(res_img), 200
     return "not found", 400
 
 
 
+
+
+    # file = request.files.get('file', "")
+    # if not file:
+    #     return "no file data", 400
+    # if not file.name:
+    #     return "need file name", 400
+    # if file:
+    #     filename = secure_filename(file.filename)
+    #     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    #     file.save(file_path)
+    #     res_id,res_distance = do_search(table_name, file_path, top_k, model, graph, sess)
+        # if isinstance(res_id, str):
+    #         return res_id
+    #     res_img = [request.url_root +"data/" + x for x in res_id]
+    #     res = dict(zip(res_img,res_distance))
+    #     res = sorted(res.items(),key=lambda item:item[1])
+    #     print(jsonify(res))
+    #     return jsonify(res), 200
+    # return "not found", 400
+
+
+
 if __name__ == "__main__":
-    load_model()
+    # load_model()
     app.run(host="0.0.0.0")

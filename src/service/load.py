@@ -24,12 +24,10 @@ def do_load(table_name, database_path):
             print("create table.")
             create_table(index_client, table_name=table_name)
         print("insert into:", table_name)
-        # print("insert into:", vectors)
         status, ids = insert_vectors(index_client, table_name, vectors)
         print(status)
         create_index(index_client, table_name)
         for i in range(len(names)):
-            # cache[names[i]] = ids[i]
             cache[ids[i]] = names[i]
         print("FP finished")
         return "FP finished"
