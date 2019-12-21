@@ -27,10 +27,15 @@ def bin_to_vec(bstr):
 
 def smiles_to_vec(smiles):
     mols = Chem.MolFromSmiles(smiles)
-    fp = AllChemcd .GetMorganFingerprintAsBitVect(mols, 2, VECTOR_DIMENSION)
+    print("mols:",mols)
+    fp = AllChemcd.GetMorganFingerprintAsBitVect(mols, 2, VECTOR_DIMENSION)
+    print("fp:",fp)
     hex_fp = DataStructs.BitVectToFPSText(fp)
+    print("hex_fp:",hex_fp)
     bstr = hex_to_bin(hex_fp)
+    print("bstr:",bstr)
     vec = bin_to_vec(bstr)
+    print("vec:",vec)
     return vec
 
 
