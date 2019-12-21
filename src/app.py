@@ -106,12 +106,12 @@ def thread_status_api():
     return "current: {}, total: {}".format(cache['current'], cache['total'])
 
 
-# @app.route('/data/<image_name>')
-# def image_path(image_name):
-#     file_name = DATA_PATH + '/' + image_name
-#     if path.exists(file_name):
-#         return send_file(file_name)
-#     return "file not exist"
+@app.route('/data/<image_name>')
+def image_path(image_name):
+    file_name = UPLOAD_PATH + '/' + image_name
+    if path.exists(file_name):
+        return send_file(file_name)
+    return "file not exist"
 
 
 @app.route('/api/v1/search', methods=['POST'])
