@@ -27,6 +27,8 @@ def do_load(table_name, database_path):
         status, ids = insert_vectors(index_client, table_name, vectors)
         print(status)
         create_index(index_client, table_name)
+        print("ids:",ids)
+        print("names:",names)
         for i in range(len(names)):
             cache[ids[i]] = names[i]
         print("FP finished")
