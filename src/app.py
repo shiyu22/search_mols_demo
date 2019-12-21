@@ -33,12 +33,12 @@ from rdkit.Chem import AllChem
 from rdkit import DataStructs
 from rdkit.Chem import Draw
 
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-config.gpu_options.per_process_gpu_memory_fraction = 0.3
-global sess
-sess = tf.Session(config=config)
-set_session(sess)
+# config = tf.ConfigProto()
+# config.gpu_options.allow_growth = True
+# config.gpu_options.per_process_gpu_memory_fraction = 0.3
+# global sess
+# sess = tf.Session(config=config)
+# set_session(sess)
 
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = set(['jpg', 'png'])
