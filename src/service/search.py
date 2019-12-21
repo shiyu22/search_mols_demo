@@ -24,6 +24,7 @@ def do_search(table_name, molecular_name, top_k):
         # feat = vgg_extract_feat(molecular_name, model, graph, sess)
         feat = smiles_to_vec(molecular_name)
         feats.append(feat)
+        print("feats:",feats)
         _, vectors = search_vectors(index_client, table_name, feats, top_k)
         vids = [x.id for x in vectors[0]] #取出查询得到的向量id
         # print(vids)
