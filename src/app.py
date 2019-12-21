@@ -3,28 +3,28 @@ import os.path as path
 import logging
 from common.config import DATA_PATH, DEFAULT_TABLE
 from common.const import UPLOAD_PATH
-from common.const import input_shape
+# from common.const import input_shape
 from common.const import default_cache_dir
 from service.load import do_load
 from service.search import do_search
 from service.count import do_count
 from service.delete import do_delete
 from service.theardpool import thread_runner
-from preprocessor.vggnet import vgg_extract_feat
+# from preprocessor.vggnet import vgg_extract_feat
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
-from flask_cors import CORS
-from flask import Flask, request, send_file, jsonify
-from flask_restful import reqparse
-from werkzeug.utils import secure_filename
-from keras.applications.vgg16 import VGG16
-from keras.applications.vgg16 import preprocess_input as preprocess_input_vgg
-from keras.preprocessing import image
+# from flask_cors import CORS
+# from flask import Flask, request, send_file, jsonify
+# from flask_restful import reqparse
+# from werkzeug.utils import secure_filename
+# from keras.applications.vgg16 import VGG16
+# from keras.applications.vgg16 import preprocess_input as preprocess_input_vgg
+# from keras.preprocessing import image
 import numpy as np
 from numpy import linalg as LA
-import tensorflow as tf
-from tensorflow.python.keras.backend import set_session
-from tensorflow.python.keras.models import load_model
-from diskcache import Cache
+# import tensorflow as tf
+# from tensorflow.python.keras.backend import set_session
+# from tensorflow.python.keras.models import load_model
+# from diskcache import Cache
 import shutil
 import urllib
 import os
@@ -132,7 +132,7 @@ def do_search_api():
         res_smi,res_distance = do_search(table_name, molecular_name, top_k, model, graph, sess)
         res_mol = []
         for i in range(len(res_smi)):
-            mol = process_smiles_file(res_smi[i])
+            mol = Chem.MolFromSmiles(res_smi[i])
             res_mol.append(mol)
         img = Draw.MolsToGridImage([res_mol[x] for x in range(len(res_mol))], molsPerRow=2, subImgSize=(400, 400),legends=["%s - %f" % (res_smi[x], res_distance[x]) for x in range(len(res_mol))])
         img.save("../out/similarities_results.png")
