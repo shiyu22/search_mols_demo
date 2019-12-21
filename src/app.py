@@ -30,7 +30,7 @@ import shutil
 
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
-config.gpu_options.per_process_gpu_memory_fraction = 0.5
+config.gpu_options.per_process_gpu_memory_fraction = 0.3
 global sess
 sess = tf.Session(config=config)
 set_session(sess)
@@ -139,6 +139,7 @@ def do_search_api():
         res_img = [request.url_root +"data/" + x for x in res_id]
         res = dict(zip(res_img,res_distance))
         res = sorted(res.items(),key=lambda item:item[1])
+        print(jsonify(res))
         return jsonify(res), 200
     return "not found", 400
 
