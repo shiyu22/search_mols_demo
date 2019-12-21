@@ -58,5 +58,6 @@ def feature_extract(table_name, filepath, names = [], feats = []):
                 names.append(line)
             except:
                 continue
-        print ("extracting feature from smi No. %d , %d images in total" %(current, total))
+            print(names,feats)
+            print ("extracting feature from smi No. %d , %d images in total" %(current, total))
     return feats, names
