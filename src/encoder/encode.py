@@ -28,7 +28,7 @@ def bin_to_vec(bstr):
 def smiles_to_vec(smiles):
     mols = Chem.MolFromSmiles(smiles)
     print("mols:",mols)
-    fp = AllChemcd.GetMorganFingerprintAsBitVect(mols, 2, VECTOR_DIMENSION)
+    fp = AllChem.GetMorganFingerprintAsBitVect(mols, 2, VECTOR_DIMENSION)
     print("fp:",fp)
     hex_fp = DataStructs.BitVectToFPSText(fp)
     print("hex_fp:",hex_fp)
@@ -50,7 +50,7 @@ def feature_extract(table_name, filepath, names = [], feats = []):
             cache['current'] = current
             line = line.strip()
             print(str(line))
-            line = 'o1c(C(O)CNC(C)(C)C)cc2c1c(CC(=O)OC(C)(C)C)ccc2'
+            # line = 'o1c(C(O)CNC(C)(C)C)cc2c1c(CC(=O)OC(C)(C)C)ccc2'
             # try:
             vec = smiles_to_vec(line)
             print(vet)
