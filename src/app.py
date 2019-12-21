@@ -12,7 +12,7 @@ from service.delete import do_delete
 from service.theardpool import thread_runner
 from preprocessor.vggnet import vgg_extract_feat
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
-from service.search import query_name_from_ids
+# from service.search import query_name_from_ids
 from flask_cors import CORS
 from flask import Flask, request, send_file, jsonify
 from flask_restful import reqparse
@@ -173,5 +173,5 @@ def do_search_api():
 
 
 if __name__ == "__main__":
-    load_model()
+    # load_model()
     app.run(host="0.0.0.0")
