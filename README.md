@@ -11,13 +11,14 @@
 |Num|int|top k|
 |Molecular|str|smile file|
 
-### /api/v1/train
+### /api/v1/load
 #### methods
 	POST
 #### PARAM
 ||||
 |-|-|-|
 |Table|str|milvus table|
+|File|str|/home/zilliz_support/workspace/lcl/mol_data/test_50.smi|
 # Requirements
     milvus container
 
@@ -27,6 +28,18 @@
     GET
 #### PARAM
     None
+
+### /api/v1/count
+#### methods
+	POST
+#### PARAM
+||||
+|-|-|-|
+|Table|str|milvus table|
+
+
+# Requirements
+    milvus container
 
 # Env
 |||
