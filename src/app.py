@@ -3,28 +3,20 @@ import os.path as path
 import logging
 from common.config import DATA_PATH, DEFAULT_TABLE
 from common.const import UPLOAD_PATH
-from common.const import input_shape
 from common.const import default_cache_dir
+from common.const import UPLOAD_PATH
 from service.load import do_load
 from service.search import do_search
 from service.count import do_count
 from service.delete import do_delete
 from service.theardpool import thread_runner
-from preprocessor.vggnet import vgg_extract_feat
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
-# from service.search import query_name_from_ids
 from flask_cors import CORS
 from flask import Flask, request, send_file, jsonify
 from flask_restful import reqparse
 from werkzeug.utils import secure_filename
-from keras.applications.vgg16 import VGG16
-from keras.applications.vgg16 import preprocess_input as preprocess_input_vgg
-from keras.preprocessing import image
 import numpy as np
 from numpy import linalg as LA
-import tensorflow as tf
-from tensorflow.python.keras.backend import set_session
-from tensorflow.python.keras.models import load_model
 from diskcache import Cache
 import shutil
 import urllib
@@ -34,12 +26,6 @@ from rdkit.Chem import AllChem
 from rdkit import DataStructs
 from rdkit.Chem import Draw
 
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-config.gpu_options.per_process_gpu_memory_fraction = 0.3
-global sess
-sess = tf.Session(config=config)
-set_session(sess)
 
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = set(['jpg', 'png'])
@@ -48,16 +34,6 @@ app.config['JSON_SORT_KEYS'] = False
 CORS(app)
 
 model = None
-
-def load_model():
-    global graph
-    graph = tf.get_default_graph()
-
-    global model
-    model = VGG16(weights='imagenet',
-                  input_shape=input_shape,
-                  pooling='max',
-                  include_top=False)
 
 
 @app.route('/api/v1/load', methods=['POST'])
@@ -70,11 +46,6 @@ def do_load_api():
     file_path = args['File']
     try:
         thread_runner(1, do_load, table_name, file_path)
-        # filenames = os.listdir(file_path)
-        # if not os.path.exists(DATA_PATH):
-        #     os.mkdir(DATA_PATH)
-        # for filename in filenames:
-        #     shutil.copy(file_path + '/' + filename, DATA_PATH)
         return "Start"
     except Exception as e:
         return "Error with {}".format(e)
@@ -88,10 +59,6 @@ def do_delete_api():
     table_name = args['Table']
     print("delete table.")
     status = do_delete(table_name)
-    try:
-        shutil.rmtree(DATA_PATH)
-    except:
-        print("cannot remove", DATA_PATH)
     return "{}".format(status)
 
 
@@ -113,7 +80,7 @@ def thread_status_api():
 
 @app.route('/data/<image_name>')
 def image_path(image_name):
-    file_name = DATA_PATH + '/' + image_name
+    file_name = UPLOAD_PATH + '/' + image_name
     if path.exists(file_name):
         return send_file(file_name)
     return "file not exist"
@@ -135,43 +102,18 @@ def do_search_api():
     if not molecular_name:
         return "no molecular"
     if molecular_name:
-        res_smi,res_distance = do_search(table_name, molecular_name, top_k, model, graph, sess)
+        res_smi,res_distance = do_search(table_name, molecular_name, top_k)
         res_mol = []
         for i in range(len(res_smi)):
-            mol = process_smiles_file(res_smi[i])
+            mol = Chem.MolFromSmiles(res_smi[i])
             res_mol.append(mol)
-        img = Draw.MolsToGridImage([res_mol[x] for x in range(len(res_mol))], molsPerRow=2, subImgSize=(400, 400),legends=["%s - %f" % (res_smi[x], res_distance[x]) for x in range(len(res_mol))])
-        img.save("../out/similarities_results.png")
-        res_img = request.url_root +"out/similarities_results.png"        
-        print(res_img)
+        print("res_mol:",len(res_mol))
+        img = Draw.MolsToGridImage(res_mol, molsPerRow=2, subImgSize=(400, 400),legends=["%s - %f" % (res_smi[x], res_distance[x]) for x in range(len(res_mol))])
+        img.save(UPLOAD_PATH + "/similarities_results.png")
+        res_img = request.url_root + "data/similarities_results.png"
         return jsonify(res_img), 200
     return "not found", 400
 
 
-
-
-
-    # file = request.files.get('file', "")
-    # if not file:
-    #     return "no file data", 400
-    # if not file.name:
-    #     return "need file name", 400
-    # if file:
-    #     filename = secure_filename(file.filename)
-    #     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    #     file.save(file_path)
-    #     res_id,res_distance = do_search(table_name, file_path, top_k, model, graph, sess)
-        # if isinstance(res_id, str):
-    #         return res_id
-    #     res_img = [request.url_root +"data/" + x for x in res_id]
-    #     res = dict(zip(res_img,res_distance))
-    #     res = sorted(res.items(),key=lambda item:item[1])
-    #     print(jsonify(res))
-    #     return jsonify(res), 200
-    # return "not found", 400
-
-
-
 if __name__ == "__main__":
-    # load_model()
     app.run(host="0.0.0.0")

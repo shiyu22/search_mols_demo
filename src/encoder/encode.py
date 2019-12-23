@@ -46,12 +46,11 @@ def feature_extract(table_name, filepath):
             current += 1
             cache['current'] = current
             line = line.strip()
-            print(str(line))
             try:
                 vec = smiles_to_vec(line)
                 feats.append(vec)
                 names.append(line)
             except:
                 continue
-            print ("extracting feature from smi No. %d , %d images in total" %(current, total))
+            print ("extracting feature from smi No. %d , %d molecular in total" %(current, total))
     return feats, names
