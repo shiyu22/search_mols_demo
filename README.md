@@ -19,8 +19,6 @@
 |-|-|-|
 |Table|str|milvus table|
 |File|str|/home/zilliz_support/workspace/lcl/mol_data/test_50.smi|
-# Requirements
-    milvus container
 
 
 ### /api/v1/process
