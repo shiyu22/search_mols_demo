@@ -26,7 +26,7 @@ def do_search(table_name, molecular_name, top_k):
         feats.append(feat)
         _, vectors = search_vectors(index_client, table_name, feats, top_k)
         vids = [x.id for x in vectors[0]] #取出查询得到的向量id
-        print(vids)
+        # print(vids)
         # res = [x.decode('utf-8') for x in query_name_from_ids(vids)]
 
         res_smi = [x for x in query_smi_from_ids(vids)] #取出向量id对应的 .smi 文件
