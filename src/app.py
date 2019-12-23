@@ -108,11 +108,14 @@ def do_search_api():
             mol = Chem.MolFromSmiles(res_smi[i])
             res_mol.append(mol)
         print("res_mol:",len(res_mol))
+        re = {}
+        for i in range(len(res_smi)):
+            sub_res_mol = [res_mol[i]]
+            sub_img = Draw.MolsToGridImage(sub_res_mol, molsPerRow=1, subImgSize=(500, 500))
+            sub_img.save(UPLOAD_PATH + "/similarities_results_"+str(i+1)+".png")
+            res_img = request.url_root + "data/similarities_results_"+str(i+1)+".png"
+            re[res_img] = [res_smi[i],res_distance[i]]
         # img = Draw.MolsToGridImage(res_mol, molsPerRow=1, subImgSize=(500, 500),legends=["%s - %s" % (res_smi[x] , str(res_distance[x])) for x in range(len(res_mol))])
-        img = Draw.MolsToGridImage(res_mol, molsPerRow=1, subImgSize=(200, 200))
-        img.save(UPLOAD_PATH + "/similarities_results.png")
-        res_img = request.url_root + "data/similarities_results.png"
-        re = {res_img:res_smi}
         return jsonify(re), 200
     return "not found", 400
 
