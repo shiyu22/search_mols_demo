@@ -103,6 +103,7 @@ def do_search_api():
         return "no molecular"
     if molecular_name:
         res_smi,res_distance = do_search(table_name, molecular_name, top_k)
+        print("res_smi:",res_smi)
         res_mol = []
         for i in range(len(res_smi)):
             mol = Chem.MolFromSmiles(res_smi[i])
