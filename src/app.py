@@ -116,7 +116,6 @@ def do_search_api():
             res_img = request.url_root + "data/similarities_results_"+str(i+1)+".png"
             re[res_img] = [res_smi[i],res_distance[i]]
         # img = Draw.MolsToGridImage(res_mol, molsPerRow=1, subImgSize=(500, 500),legends=["%s - %s" % (res_smi[x] , str(res_distance[x])) for x in range(len(res_mol))])
-        
         return jsonify(re), 200
     return "not found", 400
 
