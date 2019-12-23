@@ -46,7 +46,6 @@ def feature_extract(table_name, filepath):
             current += 1
             cache['current'] = current
             line = line.strip()
-            print(str(line))
             try:
                 vec = smiles_to_vec(line)
                 feats.append(vec)
