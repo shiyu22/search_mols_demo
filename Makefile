@@ -1,2 +1,2 @@
 build:
-	docker build -t registry.zilliz.com/public/search-images-demo:0.1.0 .
+	docker build -t registry.zilliz.com/public/search-mols-demo:0.1.0 .

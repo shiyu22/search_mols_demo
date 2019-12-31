@@ -13,7 +13,7 @@ def milvus_client():
 
 
 def create_table(client, table_name=None, dimension=VECTOR_DIMENSION,
-                 index_file_size=1024, metric_type=MetricType.L2):
+                 index_file_size=1024, metric_type=MetricType.JACCARD):
     table_param = {
         'table_name': table_name,
         'dimension': dimension,
@@ -32,7 +32,7 @@ def insert_vectors(client, table_name, vectors):
         log.error("table %s not exist", table_name)
         return
     try:
-        status, ids = client.add_vectors(table_name=table_name, records=vectors)
+        status, ids = client.insert(table_name=table_name, records=vectors)
         return status, ids
     except Exception as e:
         log.error(e)
