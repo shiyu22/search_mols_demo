@@ -1,5 +1,5 @@
 import logging as log
-from milvus import Milvus, IndexType, MetricType, Status
+from milvus import *
 from common.config import MILVUS_HOST, MILVUS_PORT, VECTOR_DIMENSION
 
 
