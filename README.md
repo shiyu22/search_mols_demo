@@ -9,7 +9,7 @@
 |-|-|-|
 |Table|str|milvus table|
 |Num|int|top k|
-|Molecular|str|smile file|
+|Molecular|str|COc1ccc(cc1)SCCC(=O)NCCNS(=O)(=O)c1cccc(c1)Cl|
 
 ### /api/v1/load
 #### methods
@@ -18,7 +18,7 @@
 ||||
 |-|-|-|
 |Table|str|milvus table|
-|File|str|/home/zilliz_support/workspace/lcl/mol_data/test_50.smi|
+|File|str|/data/workspace/apptec/demo/test_100.smi|
 
 
 ### /api/v1/process
