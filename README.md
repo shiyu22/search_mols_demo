@@ -7,7 +7,7 @@
 #### PARAM
 ||||
 |-|-|-|
-|Table|str|milvus table|
+|Table|str|milvus table,defult milvus|
 |Num|int|top k|
 |Molecular|str|COc1ccc(cc1)SCCC(=O)NCCNS(=O)(=O)c1cccc(c1)Cl|
 
@@ -17,7 +17,7 @@
 #### PARAM
 ||||
 |-|-|-|
-|Table|str|milvus table|
+|Table|str|milvus table,defult milvus|
 |File|str|/data/workspace/apptec/demo/test_100.smi|
 
 
@@ -33,7 +33,7 @@
 #### PARAM
 ||||
 |-|-|-|
-|Table|str|milvus table|
+|Table|str|milvus table,defult milvus|
 
 ### /api/v1/delete
 
@@ -47,7 +47,7 @@ POST
 
 |       |      |              |
 | ----- | ---- | ------------ |
-| Table | str  | milvus table |
+| Table | str  | milvus table,defult milvus |
 
 
 
