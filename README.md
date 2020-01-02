@@ -35,11 +35,30 @@
 |-|-|-|
 |Table|str|milvus table|
 
+### /api/v1/delete
+
+#### methods
+
+```
+POST
+```
+
+#### PARAM
+
+|       |      |              |
+| ----- | ---- | ------------ |
+| Table | str  | milvus table |
+
+
 
 # Requirements
+
     milvus container
 
+
+
 # Env
+
 |||
 |-|-|
 |MILVUS_HOST |milvus container host|
@@ -47,6 +66,7 @@
 |VECTOR_DIMENSION |default vector dimension number|
 |DATA_PATH |image data path|
 |DEFAULT_TABLE |default milvus table|
+
 
 
 ## how to use
