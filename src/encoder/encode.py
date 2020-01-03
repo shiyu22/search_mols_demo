@@ -10,29 +10,12 @@ from rdkit.Chem import AllChem
 from common.config import VECTOR_DIMENSION
 
 
-# def hex_to_bin(fp):
-#     length = len(fp) * 4
-#     bstr = str(bin(int(fp,16)))
-#     bstr = (length-(len(bstr)-2)) * '0' + bstr[2:]
-#     return bstr
-
-
-# def bin_to_vec(bstr):
-#     vec = []
-#     for f in bstr:
-#         f = int(f) * 1.0
-#         vec.append(f)
-#     return vec
-
-
 def smiles_to_vec(smiles):
     mols = Chem.MolFromSmiles(smiles)
     fp = AllChem.GetMorganFingerprintAsBitVect(mols, 2, VECTOR_DIMENSION)
     hex_fp = DataStructs.BitVectToFPSText(fp)
     # print(hex_fp)
     vec = bytes.fromhex(hex_fp)
-    # bstr = hex_to_bin(hex_fp)
-    # vec = bin_to_vec(bstr)
     return vec
 
 

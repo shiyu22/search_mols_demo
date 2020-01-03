@@ -39,7 +39,7 @@ def insert_vectors(client, table_name, vectors):
 
 
 def create_index(client, table_name):
-    param = {'index_type': IndexType.IVFLAT, 'nlist': 16384}
+    param = {'index_type': IndexType.IVFLAT, 'nlist': 2048}
     status = client.create_index(table_name, param)
     return status
 
@@ -51,7 +51,7 @@ def delete_table(client, table_name):
 
 
 def search_vectors(client, table_name, vectors, top_k):
-    status, res = client.search_vectors(table_name=table_name, query_records=vectors, top_k=top_k, nprobe=16)
+    status, res = client.search_vectors(table_name=table_name, query_records=vectors, top_k=top_k, nprobe=512)
     return status, res
 
 
