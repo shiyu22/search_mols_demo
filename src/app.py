@@ -57,9 +57,9 @@ def do_delete_api():
         parse_args()
     table_name = args['Table']
     try:
-        os.remove(default_cache_dir+'cache.db')
+        os.remove(default_cache_dir+'/cache.db')
     except:
-        print("cannot remove", default_cache_dir+'cache.db')
+        print("cannot remove", default_cache_dir+'/cache.db')
     print("delete table.")
     status = do_delete(table_name)
     return "{}".format(status)
@@ -116,8 +116,8 @@ def do_search_api():
             times = int(time.time())
             sub_res_mol = [res_mol[i]]
             sub_img = Draw.MolsToGridImage(sub_res_mol, molsPerRow=1, subImgSize=(500, 500))
-            sub_img.save(UPLOAD_PATH + "/similarities_results_" + ids[i] + "_" + times + ".png")
-            res_img = request.url_root + "data/similarities_results_"+ ids[i] + "_" + times +".png"
+            sub_img.save(UPLOAD_PATH + "/similarities_results_" + str(ids[i]) + "_" + str(times) + ".png")
+            res_img = request.url_root + "data/similarities_results_"+ str(ids[i]) + "_" + str(times) +".png"
             re[res_img] = [res_smi[i],res_distance[i]]
         # img = Draw.MolsToGridImage(res_mol, molsPerRow=1, subImgSize=(500, 500),legends=["%s - %s" % (res_smi[x] , str(res_distance[x])) for x in range(len(res_mol))])
         return jsonify(re), 200
