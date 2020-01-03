@@ -107,6 +107,7 @@ def do_search_api():
     if molecular_name:
         try:
             shutil.rmtree(UPLOAD_PATH)
+            os.mkdir(UPLOAD_PATH)
         except:
             print("cannot remove:", UPLOAD_PATH)
 
