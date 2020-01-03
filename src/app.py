@@ -110,7 +110,6 @@ def do_search_api():
             os.mkdir(UPLOAD_PATH)
         except:
             print("cannot remove:", UPLOAD_PATH)
-        print(molecular_name)
         res_smi, res_distance, ids= do_search(table_name, molecular_name, top_k)
         res_mol = []
         for i in range(len(res_smi)):
