@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from common.config import DATA_PATH as database_path
+# from common.config import DATA_PATH as database_path
 from diskcache import Cache
 from rdkit import DataStructs
 from common.const import default_cache_dir
