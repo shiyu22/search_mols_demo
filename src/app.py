@@ -100,7 +100,7 @@ def do_search_api():
     if not molecular_name:
         return "no molecular"
     if molecular_name:
-        res_smi,res_distance = do_search(table_name, molecular_name, top_k)
+        res_smi,res_distance= do_search(table_name, molecular_name, top_k)
         res_mol = []
         for i in range(len(res_smi)):
             mol = Chem.MolFromSmiles(res_smi[i])
@@ -110,8 +110,8 @@ def do_search_api():
         for i in range(len(res_smi)):
             sub_res_mol = [res_mol[i]]
             sub_img = Draw.MolsToGridImage(sub_res_mol, molsPerRow=1, subImgSize=(500, 500))
-            sub_img.save(UPLOAD_PATH + "/similarities_results_"+str(i+1)+".png")
-            res_img = request.url_root + "data/similarities_results_"+str(i+1)+".png"
+            sub_img.save(UPLOAD_PATH + "/similarities_results_" + res_smi[i] + ".png")
+            res_img = request.url_root + "data/similarities_results_"+ res_smi[i] +".png"
             re[res_img] = [res_smi[i],res_distance[i]]
         # img = Draw.MolsToGridImage(res_mol, molsPerRow=1, subImgSize=(500, 500),legends=["%s - %s" % (res_smi[x] , str(res_distance[x])) for x in range(len(res_mol))])
         return jsonify(re), 200
