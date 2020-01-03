@@ -59,7 +59,7 @@ def do_delete_api():
     try:
         os.remove(default_cache_dir+'/cache.db')
     except:
-        print("cannot remove", default_cache_dir+'/cache.db')
+        print("cannot remove:", default_cache_dir+'/cache.db')
     print("delete table.")
     status = do_delete(table_name)
     return "{}".format(status)
@@ -105,6 +105,11 @@ def do_search_api():
     if not molecular_name:
         return "no molecular"
     if molecular_name:
+        try:
+            shutil.rmtree(UPLOAD_PATH)
+        except:
+            print("cannot remove:", UPLOAD_PATH)
+
         res_smi, res_distance, ids= do_search(table_name, molecular_name, top_k)
         res_mol = []
         for i in range(len(res_smi)):
