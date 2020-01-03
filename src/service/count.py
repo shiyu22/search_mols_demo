@@ -1,8 +1,6 @@
 import logging
 import time
 from common.config import DEFAULT_TABLE
-# from common.const import default_cache_dir
-# from encoder.encode import feature_extract
 from diskcache import Cache
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index, count_table
 

@@ -30,7 +30,7 @@ def do_search(table_name, molecular_name, top_k):
         res_distance = [x.distance for x in vectors[0]]
         # print(res_distance,res_smi)
 
-        return res_smi,res_distance
+        return res_smi,res_distance, vectors
     except Exception as e:
         logging.error(e)
         return "Fail with error {}".format(e)
