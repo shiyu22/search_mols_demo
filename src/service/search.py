@@ -19,16 +19,15 @@ def do_search(table_name, molecular_name, top_k):
     try:
         feats = []
         index_client = milvus_client()
-        # feat = vgg_extract_feat(molecular_name, model, graph, sess)
         feat = smiles_to_vec(molecular_name)
         feats.append(feat)
         _, vectors = search_vectors(index_client, table_name, feats, top_k)
-        vids = [x.id for x in vectors[0]] #取出查询得到的向量id
+        vids = [x.id for x in vectors[0]]
         # print(vids)
 
-        res_smi = [x for x in query_smi_from_ids(vids)] #取出向量id对应的 .smi 文件
+        res_smi = [x for x in query_smi_from_ids(vids)]
         # print("vids:",vids)
-        res_distance = [x.distance for x in vectors[0]] #取出查询得到的向量distance
+        res_distance = [x.distance for x in vectors[0]]
         # print(res_distance,res_smi)
 
         return res_smi,res_distance

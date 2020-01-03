@@ -1,10 +1,9 @@
 import os
 import os.path as path
 import logging
-from common.config import DATA_PATH, DEFAULT_TABLE
+from common.config import DEFAULT_TABLE
 from common.const import UPLOAD_PATH
 from common.const import default_cache_dir
-from common.const import UPLOAD_PATH
 from service.load import do_load
 from service.search import do_search
 from service.count import do_count
