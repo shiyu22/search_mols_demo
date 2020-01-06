@@ -11,3 +11,5 @@ RUN conda install -c rdkit rdkit -y
 RUN pip install -r /app/requirements.txt
 
 RUN mkdir -p /tmp/result-mols
+
+CMD python src/app.py
