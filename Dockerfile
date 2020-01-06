@@ -3,7 +3,7 @@ From conda/miniconda3-centos7
 WORKDIR /app
 COPY . /app
 
-RUN apt-get update
+RUN yum -y update
 
 RUN conda update -n base -c defaults conda
 RUN conda install -c rdkit rdkit -y
