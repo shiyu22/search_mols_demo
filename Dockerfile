@@ -11,5 +11,3 @@ RUN apt-get install -y libxrender-dev
 RUN pip install -r /app/requirements.txt
 
 RUN mkdir -p /tmp/result-mols
-
-CMD python ./src/app.py
