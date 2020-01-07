@@ -6,7 +6,7 @@ from common.config import MILVUS_HOST, MILVUS_PORT, VECTOR_DIMENSION
 def milvus_client():
     try:
         milvus = Milvus()
-        status = milvus.connect(MILVUS_HOST, MILVUS_PORT)
+        status = milvus.connect(MILVUS_HOST, MILVUS_PORT, timeout=60)
         return milvus
     except Exception as e:
         log.error(e)
