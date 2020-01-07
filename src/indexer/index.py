@@ -13,7 +13,7 @@ def milvus_client():
 
 
 def create_table(client, table_name=None, dimension=VECTOR_DIMENSION,
-                 index_file_size=1024, metric_type=MetricType.JACCARD):
+                 index_file_size=256, metric_type=MetricType.JACCARD):
     table_param = {
         'table_name': table_name,
         'dimension': dimension,
