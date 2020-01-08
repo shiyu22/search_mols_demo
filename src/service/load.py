@@ -23,6 +23,7 @@ def do_load(table_name, database_path):
         print("insert into:", table_name)
 
         # status, ids = insert_vectors(index_client, table_name, vectors)
+        ids_lens = 0
         while ids_lens<len(vectors) :
             try:
                 status, ids = insert_vectors(index_client, table_name, vectors[ids_lens:ids_lens+100000])
