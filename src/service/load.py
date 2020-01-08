@@ -23,6 +23,7 @@ def do_load(table_name, database_path):
         print("insert into:", table_name)
 
         # status, ids = insert_vectors(index_client, table_name, vectors)
+        total_ids = []
         ids_lens = 0
         while ids_lens<len(vectors) :
             try:
@@ -30,11 +31,12 @@ def do_load(table_name, database_path):
             except:
                 status, ids = insert_vectors(index_client, table_name, vectors[ids_lens:len(vectors)])
             ids_lens += 100000
+            total_ids += ids
             print("ids:",len(ids))
 
         create_index(index_client, table_name)
         for i in range(len(names)):
-            cache[ids[i]] = names[i]
+            cache[total_ids[i]] = names[i]
         print("FP finished")
         return "FP finished"
     except Exception as e:
