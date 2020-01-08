@@ -113,7 +113,7 @@ def do_search_api():
         try:
             res_smi, res_distance, ids= do_search(table_name, molecular_name, top_k)
         except:
-            return "There has no results, please input the correct molecular.", 400
+            return "There has no results, please input the correct molecular."
         res_mol = []
         for i in range(len(res_smi)):
             mol = Chem.MolFromSmiles(res_smi[i])
