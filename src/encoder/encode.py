@@ -35,7 +35,7 @@ def feature_extract(table_name, filepath):
             try:
                 vec = smiles_to_vec(line)
                 feats.append(vec)
-                names.append(line)
+                names.append(line.encode())
             except:
                 continue
             print ("extracting feature from smi No. %d , %d molecular in total" %(current, total))

@@ -25,7 +25,7 @@ def do_search(table_name, molecular_name, top_k):
         vids = [x.id for x in vectors[0]]
         # print(vids)
 
-        res_smi = [x for x in query_smi_from_ids(vids)]
+        res_smi = [x.decode('utf-8') for x in query_smi_from_ids(vids)]
         # print("vids:",vids)
         res_distance = [x.distance for x in vectors[0]]
         res_ids = [x.id for x in vectors[0]]
