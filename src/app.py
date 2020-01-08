@@ -115,8 +115,6 @@ def do_search_api():
         except:
             return "There has no results, please input the correct molecular and ensure the table has data."
         res_mol = []
-        print(len(res_smi),len(ids),len(res_distance))
-        print(res_smi,ids,res_distance)
         for i in range(len(res_smi)):
             mol = Chem.MolFromSmiles(res_smi[i])
             res_mol.append(mol)
