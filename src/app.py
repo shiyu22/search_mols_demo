@@ -3,12 +3,8 @@ import os.path as path
 import logging
 from common.config import SIM_TABLE,SUB_TABLE,SUPER_TABLE,NUM
 from common.const import UPLOAD_PATH
-from common.const import default_cache_dir
-from service.load import do_load
 from service.search import do_search
 from service.count import do_count
-from service.delete import do_delete
-from service.theardpool import thread_runner
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
 from flask_cors import CORS
 from flask import Flask, request, send_file, jsonify
@@ -16,15 +12,7 @@ from flask_restful import reqparse
 from werkzeug.utils import secure_filename
 import numpy as np
 from numpy import linalg as LA
-from diskcache import Cache
-import shutil
-import urllib
-import os
 import time
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit import DataStructs
-from rdkit.Chem import Draw
 
 
 app = Flask(__name__)
