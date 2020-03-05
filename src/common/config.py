@@ -1,6 +1,9 @@
 import os
 
-MILVUS_HOST = os.getenv("MILVUS_HOST", "127.0.0.1")
-MILVUS_PORT = os.getenv("MILVUS_PORT", 19530)
+MILVUS_HOST = os.getenv("MILVUS_HOST", "192.168.1.58")
+MILVUS_PORT = os.getenv("MILVUS_PORT", 19520)
 VECTOR_DIMENSION = os.getenv("VECTOR_DIMENSION", 512)
-DEFAULT_TABLE = os.getenv("DEFAULT_TABLE", "defult_mol_search_table")
+NUM = os.getenv("TOPK_NUM", 100)
+SIM_TABLE = os.getenv("SIM_TABLE", "similarity_table")
+SUB_TABLE = os.getenv("SUB_TABLE", "substructure_table")
+SUPER_TABLE = os.getenv("SUPER_TABLE", "superstructure_table")
