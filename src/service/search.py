@@ -57,5 +57,6 @@ def do_search(table_name, molecular_name, top_k):
     finally:
         if index_client:
             index_client.disconnect()
-        cur.close()
-        conn.close()
+        if conn:
+            cur.close()
+            conn.close()
